@@ -1,0 +1,22 @@
+{
+  "name": "nw-rest-client",
+  "main": "index.html",
+  "window": {
+    "show": true,
+    "frame": true,
+    "toolbar": false,
+    "icon": "app.icns",
+    "width": 550,
+    "height": 470
+  },
+  "scripts": {
+    "start": "nw ."
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "highlight.js":"^9.9.0",
+    "restler":"^3.4.0",
+    "codemirror":"^5.22.0",
+    "jquery":"^1.12.3"
+  }
+}

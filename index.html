@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NW Rest Client</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="./node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="./node_modules/highlight.js/styles/idea.css">
+    <link rel="stylesheet" href="./public/css/index.css" />
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./node_modules/highlight.js/highlight.pack.js"></script>
+    <script src="./node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="./node_modules/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="./node_modules/codemirror/addon/comment/continuecomment.js"></script>
+    <script src="./node_modules/codemirror/addon/comment/comment.js"></script>
+    <script src="./node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <script src="./public/js/main.js"></script>
+</head>
+<body>
+    <header>
+        <div class="alert alert-info" role="alert">NW Rest Client 小工具</div>
+    </header>
+    <section>
+        <div class="container text-center">
+            <div class="form-horizontal" role="form">
+                <div class="form-group col-xs-10">
+                    <label for="inputUrl" class="col-xs-2 control-label"><p style="font-size:20px;">请求地址</p></label>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" id="inputUrl" value="https://raw.githubusercontent.com/josdejong/jsoneditor/master/bower.json" placeholder="请求地址" onkeypress="if(event.keyCode==13){$('#goBtn').click();}">
+                    </div>
+                </div>
+                <button class="btn btn-danger col-xs-2" id="goBtn">Go!</button>
+            </div>
+            <div class="clearfix"></div>
+            <div>
+                <label class="radio-inline">
+                    <input type="radio" name="req_method" id="methodGet" value="get" checked> Get
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="req_method" id="methodPost" value="post"> Post
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="req_method" id="methodPut" value="put"> Put
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="req_method" id="methodDelete" value="delete"> Delete
+                </label>
+                <!--<label class="form-inline" style="display: none" id="req_contentType">-->
+                    <!--<select class="form-control">-->
+                        <!--<option>application/json</option>-->
+                        <!--<option>application/xml</option>-->
+                        <!--<option>application/atom+xml</option>-->
+                        <!--<option>multipart/form-data</option>-->
+                        <!--<option>multipart/alternative</option>-->
+                        <!--<option>multipart/mixed</option>-->
+                        <!--<option>application/x-www-form-urlencoded</option>-->
+                        <!--<option>application/base64</option>-->
+                        <!--<option>application/octet-stream</option>-->
+                        <!--<option>text/plain</option>-->
+                        <!--<option>text/css</option>-->
+                        <!--<option>text/html</option>-->
+                        <!--<option>application/javascript</option>-->
+                    <!--</select>-->
+                <!--</label>-->
+            </div>
+            <div class="row text-left" style="margin-top:20px;margin-bottom:20px;">
+                <h3>请求头(Request Headers)</h3>
+                <div class="col-xs-12">
+                    <textarea class="form-control code" id="req_headers"rows="8">
+{
+"accept": "application/json",
+"accept-encoding": "gzip, deflate",
+"accept-language": "en-US,en;q=0.8",
+"user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36"
+}</textarea>
+                </div>
+            </div>
+            <div class="panel-group text-left" role="tablist">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="collapseListGroupHeading1">
+                        <h4 class="panel-title">
+                            <a class="collapsed" data-toggle="collapse" href="#advancedSettings" aria-expanded="false" aria-controls="collapseListGroup1">
+                                认证设置
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="advancedSettings" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1">
+                        <div style="padding:2em;">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Http Basic认证</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-horizontal" role="form">
+                                        <!-- Http Basic -->
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label">Username</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="username" placeholder="Username">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password" class="col-sm-2 control-label">Password</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" id="password" placeholder="Password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Oauth认证</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-horizontal" role="form">
+                                        <!-- Http Basic -->
+                                        <div class="form-group">
+                                            <label for="accessToken" class="col-sm-2 control-label">Access Token</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="accessToken" placeholder="Access Token">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-left">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active"><a href="#responseBody" role="tab" data-toggle="tab">响应体(Response Body)</a></li>
+                    <li role="presentation"><a href="#responseHead" role="tab" data-toggle="tab">响应头(Response Headers)</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="responseBody">
+                        <pre>
+                            <code id="res_body" class="hljs" style="height:500px;overflow: auto">
+                            </code>
+                        </pre>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="responseHead">
+                        <pre>
+                            <code id="res_headers" class="hljs json" style="height:500px;overflow: auto">
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer></footer>
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("req_headers"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        autoCloseBrackets: true,
+        mode: "application/ld+json",
+        lineWrapping: true
+    });
+</script>
+</body>
+</html>
